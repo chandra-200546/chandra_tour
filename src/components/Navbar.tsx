@@ -9,7 +9,6 @@ const Navbar = () => {
   const navItems = [
     { name: "Destinations", href: "/destinations", icon: MapPin },
     { name: "Plan Trip", href: "/plan", icon: Compass },
-    { name: "Local Guides", href: "/guides", icon: Users },
     { name: "AI Assistant", href: "/chat", icon: MessageCircle },
   ];
 
@@ -41,10 +40,14 @@ const Navbar = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            <Button variant="ghost">Sign In</Button>
-            <Button className="bg-gradient-warm shadow-warm hover:shadow-elegant transition-all">
-              Get Started
-            </Button>
+            <Link to="/auth">
+              <Button variant="ghost">Sign In</Button>
+            </Link>
+            <Link to="/auth">
+              <Button className="bg-gradient-warm shadow-warm hover:shadow-elegant transition-all">
+                Get Started
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -71,8 +74,12 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="px-4 pt-4 space-y-2 border-t border-border">
-              <Button variant="outline" className="w-full">Sign In</Button>
-              <Button className="w-full bg-gradient-warm">Get Started</Button>
+              <Link to="/auth" onClick={() => setIsOpen(false)}>
+                <Button variant="outline" className="w-full">Sign In</Button>
+              </Link>
+              <Link to="/auth" onClick={() => setIsOpen(false)}>
+                <Button className="w-full bg-gradient-warm">Get Started</Button>
+              </Link>
             </div>
           </div>
         )}

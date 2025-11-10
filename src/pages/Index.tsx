@@ -106,11 +106,17 @@ const Index = () => {
               <Button 
                 size="lg" 
                 className="bg-gradient-warm shadow-warm hover:shadow-elegant transition-all text-lg px-8 group"
+                onClick={() => window.location.href = '/plan'}
               >
                 Start Planning
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="text-lg px-8"
+                onClick={() => window.location.href = '/chat'}
+              >
                 <MessageCircle className="w-5 h-5 mr-2" />
                 Try AI Assistant
               </Button>
@@ -174,7 +180,11 @@ const Index = () => {
               <h2 className="text-4xl font-bold mb-2">Popular Destinations</h2>
               <p className="text-muted-foreground text-lg">Start your journey to these incredible places</p>
             </div>
-            <Button variant="outline" className="hidden md:flex">
+            <Button 
+              variant="outline" 
+              className="hidden md:flex"
+              onClick={() => window.location.href = '/destinations'}
+            >
               View All
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
@@ -213,11 +223,20 @@ const Index = () => {
               Join thousands of travelers who trust Chandra Tourism for their perfect Indian getaway
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Button size="lg" variant="secondary" className="text-lg px-8">
+              <Button 
+                size="lg" 
+                variant="secondary" 
+                className="text-lg px-8"
+                onClick={() => window.location.href = '/destinations'}
+              >
                 <TrendingUp className="w-5 h-5 mr-2" />
                 Explore Destinations
               </Button>
-              <Button size="lg" className="bg-background text-foreground hover:bg-background/90 text-lg px-8">
+              <Button 
+                size="lg" 
+                className="bg-background text-foreground hover:bg-background/90 text-lg px-8"
+                onClick={() => window.location.href = '/chat'}
+              >
                 Talk to AI Assistant
               </Button>
             </div>
