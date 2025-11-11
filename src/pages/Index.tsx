@@ -35,12 +35,6 @@ const Index = () => {
       gradient: "from-accent/20 to-accent/5"
     },
     {
-      icon: Users,
-      title: "Local Guides",
-      description: "Connect with verified local experts who know the hidden gems of each destination",
-      gradient: "from-primary/20 to-primary/5"
-    },
-    {
       icon: MapPin,
       title: "Cultural Discovery",
       description: "Explore festivals, local cuisine, and authentic experiences unique to each region",
@@ -63,7 +57,6 @@ const Index = () => {
 
   const stats = [
     { icon: MapPin, value: "100+", label: "Destinations" },
-    { icon: Users, value: "50+", label: "Local Guides" },
     { icon: Heart, value: "1000+", label: "Happy Travelers" },
     { icon: Award, value: "4.9", label: "Average Rating" },
   ];
@@ -123,7 +116,7 @@ const Index = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-12">
+            <div className="grid grid-cols-3 gap-6 pt-12">
               {stats.map((stat) => (
                 <Card key={stat.label} className="p-6 text-center border-border/50 shadow-sm hover:shadow-warm transition-all">
                   <stat.icon className="w-8 h-8 mx-auto mb-2 text-primary" />
