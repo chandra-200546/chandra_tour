@@ -111,7 +111,13 @@ Format it as a structured JSON with this exact schema:
     const data = await response.json();
     console.log("AI response received");
     
-    const itinerary = JSON.parse(data.choices[0].message.content);
+    // Extract content and clean markdown code blocks if present
+    let content = data.choices[0].message.content;
+    
+    // Remove markdown code block markers (```json and ```)
+    content = content.replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
+    
+    const itinerary = JSON.parse(content);
 
     return new Response(JSON.stringify({ itinerary }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
