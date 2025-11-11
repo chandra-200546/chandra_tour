@@ -237,6 +237,57 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Developer Section */}
+      <section className="py-20 px-4 bg-muted/30">
+        <div className="container mx-auto">
+          <div className="max-w-2xl mx-auto text-center space-y-6">
+            <h2 className="text-4xl font-bold mb-4">
+              Meet the{" "}
+              <span className="bg-gradient-warm bg-clip-text text-transparent">
+                Developer
+              </span>
+            </h2>
+            <p className="text-xl text-muted-foreground mb-8">
+              Have questions or need assistance? Get in touch with us
+            </p>
+            
+            <Card className="p-8 border-border/50 shadow-warm">
+              <div className="space-y-6">
+                <div className="flex items-center justify-center">
+                  <div className="w-20 h-20 rounded-full bg-gradient-warm flex items-center justify-center">
+                    <Users className="w-10 h-10 text-primary-foreground" />
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="text-2xl font-bold mb-2">Chandrashekhar</h3>
+                  <p className="text-muted-foreground">Full Stack Developer</p>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                  <Button 
+                    size="lg" 
+                    className="bg-gradient-warm shadow-warm hover:shadow-elegant transition-all"
+                    onClick={() => window.open('tel:7975256005')}
+                  >
+                    <MessageCircle className="w-5 h-5 mr-2" />
+                    Call: 7975256005
+                  </Button>
+                  <Button 
+                    size="lg" 
+                    variant="outline"
+                    onClick={() => window.open('https://wa.me/917975256005', '_blank')}
+                  >
+                    <MessageCircle className="w-5 h-5 mr-2" />
+                    WhatsApp: 7975256005
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="py-12 px-4 border-t border-border">
         <div className="container mx-auto text-center text-muted-foreground">
