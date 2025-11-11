@@ -268,7 +268,7 @@ const Index = () => {
                   <Button 
                     size="lg" 
                     className="bg-gradient-warm shadow-warm hover:shadow-elegant transition-all"
-                    onClick={() => window.open('tel:7975256005')}
+                    onClick={() => window.location.href = 'tel:+917975256005'}
                   >
                     <MessageCircle className="w-5 h-5 mr-2" />
                     Call: 7975256005
@@ -276,7 +276,7 @@ const Index = () => {
                   <Button 
                     size="lg" 
                     variant="outline"
-                    onClick={() => window.open('https://wa.me/917975256005', '_blank')}
+                    onClick={() => window.location.href = 'https://api.whatsapp.com/send?phone=917975256005&text=Hello%20Chandrashekhar!%20I%20need%20help%20with%20my%20travel%20plans.'}
                   >
                     <MessageCircle className="w-5 h-5 mr-2" />
                     WhatsApp: 7975256005
