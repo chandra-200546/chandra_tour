@@ -11,7 +11,10 @@ import {
   Heart,
   TrendingUp,
   Award,
-  ArrowRight
+  ArrowRight,
+  Phone,
+  Mail,
+  Copy
 } from "lucide-react";
 
 const Index = () => {
@@ -240,7 +243,7 @@ const Index = () => {
       {/* Developer Section */}
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto">
-          <div className="max-w-2xl mx-auto text-center space-y-6">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
             <h2 className="text-4xl font-bold mb-4">
               Meet the{" "}
               <span className="bg-gradient-warm bg-clip-text text-transparent">
@@ -251,29 +254,64 @@ const Index = () => {
               Have questions or need assistance? Get in touch with us
             </p>
             
-            <Card className="p-8 border-border/50 shadow-warm">
-              <div className="space-y-6">
+            <Card className="p-8 border-border/50 shadow-warm overflow-hidden relative">
+              {/* Background decoration */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
+              
+              <div className="relative space-y-8">
                 <div className="flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-full bg-gradient-warm flex items-center justify-center">
-                    <Users className="w-10 h-10 text-primary-foreground" />
+                  <div className="w-24 h-24 rounded-full bg-gradient-warm flex items-center justify-center shadow-elegant">
+                    <Users className="w-12 h-12 text-primary-foreground" />
                   </div>
                 </div>
                 
                 <div>
-                  <h3 className="text-2xl font-bold mb-2">Chandrashekhar</h3>
-                  <p className="text-muted-foreground mb-4">Full Stack Developer</p>
-                  
-                  <div className="space-y-2 text-foreground">
-                    <p className="text-lg">
-                      <span className="font-semibold">Phone:</span> 7975256005
-                    </p>
-                    <p className="text-lg">
-                      <span className="font-semibold">WhatsApp:</span> 7975256005
-                    </p>
-                    <p className="text-lg">
-                      <span className="font-semibold">Email:</span> chandrashekharkumbarias8055@gmail.com
-                    </p>
-                  </div>
+                  <h3 className="text-3xl font-bold mb-2">Chandrashekhar</h3>
+                  <p className="text-lg text-muted-foreground">Full Stack Developer</p>
+                </div>
+                
+                <div className="grid gap-4 max-w-md mx-auto">
+                  {/* Phone */}
+                  <Card className="p-4 hover:shadow-warm transition-all cursor-pointer group border-border/50" onClick={() => window.location.href = 'tel:+917975256005'}>
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                        <Phone className="w-6 h-6 text-primary" />
+                      </div>
+                      <div className="flex-1 text-left">
+                        <p className="text-sm text-muted-foreground">Phone</p>
+                        <p className="text-lg font-semibold group-hover:text-primary transition-colors">7975256005</p>
+                      </div>
+                      <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                    </div>
+                  </Card>
+
+                  {/* WhatsApp */}
+                  <Card className="p-4 hover:shadow-warm transition-all cursor-pointer group border-border/50" onClick={() => window.open('https://wa.me/7975256005?text=Hello%20Chandrashekhar!%20I%20need%20help%20with%20my%20travel%20plans.', '_blank')}>
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
+                        <MessageCircle className="w-6 h-6 text-secondary" />
+                      </div>
+                      <div className="flex-1 text-left">
+                        <p className="text-sm text-muted-foreground">WhatsApp</p>
+                        <p className="text-lg font-semibold group-hover:text-secondary transition-colors">7975256005</p>
+                      </div>
+                      <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-secondary group-hover:translate-x-1 transition-all" />
+                    </div>
+                  </Card>
+
+                  {/* Email */}
+                  <Card className="p-4 hover:shadow-warm transition-all cursor-pointer group border-border/50" onClick={() => window.location.href = 'mailto:chandrashekharkumbarias8055@gmail.com'}>
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                        <Mail className="w-6 h-6 text-accent" />
+                      </div>
+                      <div className="flex-1 text-left overflow-hidden">
+                        <p className="text-sm text-muted-foreground">Email</p>
+                        <p className="text-sm md:text-base font-semibold group-hover:text-accent transition-colors truncate">chandrashekharkumbarias8055@gmail.com</p>
+                      </div>
+                      <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-accent group-hover:translate-x-1 transition-all" />
+                    </div>
+                  </Card>
                 </div>
               </div>
             </Card>
