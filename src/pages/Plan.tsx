@@ -3,13 +3,15 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Calendar, Users, MapPin, Sparkles } from "lucide-react";
+import { Calendar, Users, MapPin, Sparkles, Navigation } from "lucide-react";
 import { useState } from "react";
 import { generateItinerary } from "@/utils/aiClient";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const Plan = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     destination: "",
     startDate: "",
@@ -163,12 +165,22 @@ const Plan = () => {
           {/* Itinerary Display */}
           {itinerary && (
             <Card className="mt-8 p-8 shadow-elegant">
-              <div className="mb-6">
-                <h2 className="text-3xl font-bold mb-2">{itinerary.title}</h2>
-                <p className="text-muted-foreground mb-4">{itinerary.overview}</p>
-                <div className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold">
-                  Total Estimated Cost: {itinerary.totalEstimatedCost}
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <div className="flex-1">
+                  <h2 className="text-3xl font-bold mb-2">{itinerary.title}</h2>
+                  <p className="text-muted-foreground mb-4">{itinerary.overview}</p>
+                  <div className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold">
+                    Total Estimated Cost: {itinerary.totalEstimatedCost}
+                  </div>
                 </div>
+                <Button 
+                  onClick={() => navigate("/track-journey", { state: { itinerary } })}
+                  className="bg-gradient-warm shadow-warm hover:shadow-elegant transition-all"
+                  size="lg"
+                >
+                  <Navigation className="w-5 h-5 mr-2" />
+                  Track Journey
+                </Button>
               </div>
 
               <div className="space-y-8">
