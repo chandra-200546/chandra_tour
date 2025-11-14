@@ -9,6 +9,8 @@ import Plan from "./pages/Plan";
 import Chat from "./pages/Chat";
 import Auth from "./pages/Auth";
 import TrackJourney from "./pages/TrackJourney";
+import SmartPay from "./pages/SmartPay";
+import GroupDetail from "./pages/GroupDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +28,8 @@ const App = () => (
           <Route path="/chat" element={<Chat />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/track-journey" element={<TrackJourney />} />
+          <Route path="/smartpay" element={<SmartPay />} />
+          <Route path="/smartpay/:groupId" element={<GroupDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Compass, MessageCircle, MapPin, Users, Navigation } from "lucide-react";
+import { Menu, X, Compass, MessageCircle, MapPin, Users, Navigation, Wallet } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +10,7 @@ const Navbar = () => {
     { name: "Destinations", href: "/destinations", icon: MapPin },
     { name: "Plan Trip", href: "/plan", icon: Compass },
     { name: "Track Journey", href: "/track-journey", icon: Navigation },
+    { name: "SmartPay", href: "/smartpay", icon: Wallet },
     { name: "AI Assistant", href: "/chat", icon: MessageCircle },
   ];
 
