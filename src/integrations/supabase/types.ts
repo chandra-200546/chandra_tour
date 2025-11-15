@@ -14,16 +14,176 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      expense_splits: {
+        Row: {
+          expense_id: string
+          id: string
+          is_paid: boolean
+          member_id: string
+          paid_at: string | null
+          payment_id: string | null
+          share_amount: number
+        }
+        Insert: {
+          expense_id: string
+          id?: string
+          is_paid?: boolean
+          member_id: string
+          paid_at?: string | null
+          payment_id?: string | null
+          share_amount: number
+        }
+        Update: {
+          expense_id?: string
+          id?: string
+          is_paid?: boolean
+          member_id?: string
+          paid_at?: string | null
+          payment_id?: string | null
+          share_amount?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expense_splits_expense_id_fkey"
+            columns: ["expense_id"]
+            isOneToOne: false
+            referencedRelation: "expenses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expense_splits_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "group_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      expenses: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string
+          expense_date: string
+          group_id: string
+          id: string
+          paid_by: string
+          split_type: Database["public"]["Enums"]["split_type"]
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description: string
+          expense_date?: string
+          group_id: string
+          id?: string
+          paid_by: string
+          split_type?: Database["public"]["Enums"]["split_type"]
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string
+          expense_date?: string
+          group_id?: string
+          id?: string
+          paid_by?: string
+          split_type?: Database["public"]["Enums"]["split_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expenses_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "trip_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expenses_paid_by_fkey"
+            columns: ["paid_by"]
+            isOneToOne: false
+            referencedRelation: "group_members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group_members: {
+        Row: {
+          group_id: string
+          id: string
+          is_admin: boolean
+          joined_at: string
+          name: string
+          phone_number: string | null
+          user_id: string | null
+        }
+        Insert: {
+          group_id: string
+          id?: string
+          is_admin?: boolean
+          joined_at?: string
+          name: string
+          phone_number?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          group_id?: string
+          id?: string
+          is_admin?: boolean
+          joined_at?: string
+          name?: string
+          phone_number?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "trip_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trip_groups: {
+        Row: {
+          created_at: string
+          created_by: string
+          description: string | null
+          id: string
+          name: string
+          trip_code: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          description?: string | null
+          id?: string
+          name: string
+          trip_code: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          id?: string
+          name?: string
+          trip_code?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_trip_code: { Args: never; Returns: string }
     }
     Enums: {
-      [_ in never]: never
+      split_type: "equal" | "custom" | "percentage"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +310,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      split_type: ["equal", "custom", "percentage"],
+    },
   },
 } as const

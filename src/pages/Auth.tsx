@@ -5,28 +5,107 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Compass, Mail, Lock } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Auth = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [signInData, setSignInData] = useState({ email: "", password: "" });
   const [signUpData, setSignUpData] = useState({ email: "", password: "", confirmPassword: "" });
+  const [loading, setLoading] = useState(false);
 
-  const handleSignIn = (e: React.FormEvent) => {
+  useEffect(() => {
+    // Check if user is already logged in
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate("/");
+      }
+    };
+    checkAuth();
+  }, [navigate]);
+
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Sign in:", signInData);
-    navigate("/");
+    setLoading(true);
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: signInData.email,
+        password: signInData.password,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Signed in successfully!",
+      });
+
+      navigate("/");
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to sign in",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleSignUp = (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (signUpData.password !== signUpData.confirmPassword) {
-      alert("Passwords don't match!");
+      toast({
+        title: "Error",
+        description: "Passwords don't match!",
+        variant: "destructive",
+      });
       return;
     }
-    console.log("Sign up:", signUpData);
-    navigate("/");
+
+    if (signUpData.password.length < 6) {
+      toast({
+        title: "Error",
+        description: "Password must be at least 6 characters",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: signUpData.email,
+        password: signUpData.password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+        },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Account created successfully!",
+      });
+
+      navigate("/");
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to sign up",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -92,8 +171,9 @@ const Auth = () => {
                   <Button 
                     type="submit" 
                     className="w-full bg-gradient-warm shadow-warm"
+                    disabled={loading}
                   >
-                    Sign In
+                    {loading ? "Signing In..." : "Sign In"}
                   </Button>
                 </form>
               </TabsContent>
@@ -148,8 +228,9 @@ const Auth = () => {
                   <Button 
                     type="submit" 
                     className="w-full bg-gradient-warm shadow-warm"
+                    disabled={loading}
                   >
-                    Sign Up
+                    {loading ? "Creating Account..." : "Sign Up"}
                   </Button>
                 </form>
               </TabsContent>
