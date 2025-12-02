@@ -219,52 +219,53 @@ const TrackJourney = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      <section className="pt-20 pb-8 px-4">
+      <section className="pt-16 sm:pt-20 pb-6 sm:pb-8 px-3 sm:px-4">
         <div className="container mx-auto max-w-7xl">
-          <div className="mb-6">
+          <div className="mb-4 sm:mb-6">
             <Button 
               variant="ghost" 
+              size="sm"
               onClick={() => navigate("/plan")}
-              className="mb-4 text-muted-foreground hover:text-foreground"
+              className="mb-3 sm:mb-4 text-muted-foreground hover:text-foreground"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Itinerary
+              <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
+              <span className="text-sm">Back</span>
             </Button>
             
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-4xl font-bold mb-2 text-foreground">
-                  Track Your <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Journey</span>
+            <div className="flex items-start sm:items-center justify-between gap-2">
+              <div className="flex-1 min-w-0">
+                <h1 className="text-2xl sm:text-4xl font-bold mb-1 sm:mb-2 text-foreground">
+                  Track <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Journey</span>
                 </h1>
-                <p className="text-muted-foreground flex items-center gap-2">
+                <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                   </span>
-                  Real-time location tracking active
+                  <span className="truncate">Real-time tracking active</span>
                 </p>
               </div>
-              <Badge variant="secondary" className="hidden sm:flex items-center gap-1">
+              <Badge variant="secondary" className="flex items-center gap-1 text-xs flex-shrink-0">
                 <Compass className="w-3 h-3" />
-                {userLocation ? "GPS Active" : "Acquiring..."}
+                <span className="hidden xs:inline">{userLocation ? "GPS Active" : "Acquiring..."}</span>
               </Badge>
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
             {/* Map Container */}
-            <Card className="lg:col-span-2 p-0 overflow-hidden shadow-2xl border-border/50 relative">
+            <Card className="lg:col-span-2 p-0 overflow-hidden shadow-2xl border-border/50 relative order-1">
               <div 
                 ref={mapRef} 
-                className="w-full h-[500px] lg:h-[600px]"
+                className="w-full h-[300px] sm:h-[400px] lg:h-[600px]"
               />
               
               {/* Map Controls Overlay */}
-              <div className="absolute bottom-4 right-4 flex flex-col gap-2">
+              <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 flex flex-col gap-2">
                 <Button 
                   size="icon" 
                   variant="secondary"
-                  className="shadow-lg bg-card/90 backdrop-blur-sm hover:bg-card"
+                  className="shadow-lg bg-card/90 backdrop-blur-sm hover:bg-card h-10 w-10 sm:h-10 sm:w-10"
                   onClick={centerOnUser}
                   disabled={!userLocation}
                 >
@@ -274,8 +275,8 @@ const TrackJourney = () => {
 
               {/* Status Overlay */}
               {userLocation && (
-                <div className="absolute top-4 left-4 bg-card/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-border/50">
-                  <div className="flex items-center gap-2 text-xs">
+                <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-card/90 backdrop-blur-sm rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 shadow-lg border border-border/50">
+                  <div className="flex items-center gap-2 text-[10px] sm:text-xs">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
@@ -287,71 +288,74 @@ const TrackJourney = () => {
             </Card>
 
             {/* Info Panel */}
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4 order-2">
               {userLocation ? (
                 <>
-                  <Card className="p-5 shadow-lg border-border/50 bg-gradient-to-br from-card to-card/80">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-secondary/20 flex items-center justify-center">
-                        <Navigation className="w-6 h-6 text-secondary" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-foreground">Your Location</h3>
-                        <p className="text-sm text-muted-foreground">Live tracking active</p>
-                      </div>
-                    </div>
-                    <div className="text-xs font-mono bg-muted/50 p-3 rounded-lg text-muted-foreground">
-                      <div className="grid grid-cols-2 gap-2">
-                        <div>
-                          <span className="text-muted-foreground/70">LAT</span>
-                          <p className="font-semibold text-foreground">{userLocation.lat.toFixed(6)}</p>
+                  {/* Mobile: Horizontal scroll cards, Desktop: Stacked */}
+                  <div className="flex lg:flex-col gap-3 overflow-x-auto pb-2 lg:pb-0 lg:overflow-visible -mx-3 px-3 lg:mx-0 lg:px-0 snap-x snap-mandatory lg:snap-none">
+                    <Card className="p-4 sm:p-5 shadow-lg border-border/50 bg-gradient-to-br from-card to-card/80 flex-shrink-0 w-[280px] sm:w-auto lg:w-full snap-start">
+                      <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-secondary/20 flex items-center justify-center">
+                          <Navigation className="w-5 h-5 sm:w-6 sm:h-6 text-secondary" />
                         </div>
-                        <div>
-                          <span className="text-muted-foreground/70">LNG</span>
-                          <p className="font-semibold text-foreground">{userLocation.lng.toFixed(6)}</p>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-sm sm:text-base text-foreground">Your Location</h3>
+                          <p className="text-xs sm:text-sm text-muted-foreground">Live tracking active</p>
                         </div>
                       </div>
-                    </div>
-                  </Card>
-
-                  {nearestDestination && (
-                    <Card className="p-5 shadow-lg border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
-                          <MapPin className="w-6 h-6 text-primary" />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-foreground">Next Destination</h3>
-                          <p className="text-sm text-muted-foreground line-clamp-1">{nearestDestination}</p>
+                      <div className="text-[10px] sm:text-xs font-mono bg-muted/50 p-2 sm:p-3 rounded-lg text-muted-foreground">
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <span className="text-muted-foreground/70">LAT</span>
+                            <p className="font-semibold text-foreground text-xs sm:text-sm">{userLocation.lat.toFixed(6)}</p>
+                          </div>
+                          <div>
+                            <span className="text-muted-foreground/70">LNG</span>
+                            <p className="font-semibold text-foreground text-xs sm:text-sm">{userLocation.lng.toFixed(6)}</p>
+                          </div>
                         </div>
                       </div>
-                      {distance !== null && (
-                        <div className="flex items-baseline gap-1">
-                          <span className="text-3xl font-bold text-primary">{distance.toFixed(1)}</span>
-                          <span className="text-lg text-muted-foreground">km away</span>
-                        </div>
-                      )}
                     </Card>
-                  )}
 
-                  <Card className="p-5 shadow-lg border-border/50">
-                    <h3 className="font-semibold mb-4 flex items-center gap-2 text-foreground">
+                    {nearestDestination && (
+                      <Card className="p-4 sm:p-5 shadow-lg border-primary/20 bg-gradient-to-br from-primary/5 to-transparent flex-shrink-0 w-[280px] sm:w-auto lg:w-full snap-start">
+                        <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                            <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-sm sm:text-base text-foreground">Next Destination</h3>
+                            <p className="text-xs sm:text-sm text-muted-foreground line-clamp-1">{nearestDestination}</p>
+                          </div>
+                        </div>
+                        {distance !== null && (
+                          <div className="flex items-baseline gap-1">
+                            <span className="text-2xl sm:text-3xl font-bold text-primary">{distance.toFixed(1)}</span>
+                            <span className="text-base sm:text-lg text-muted-foreground">km away</span>
+                          </div>
+                        )}
+                      </Card>
+                    )}
+                  </div>
+
+                  <Card className="p-4 sm:p-5 shadow-lg border-border/50">
+                    <h3 className="font-semibold mb-3 sm:mb-4 flex items-center gap-2 text-sm sm:text-base text-foreground">
                       <Clock className="w-4 h-4 text-primary" />
                       Today's Activities
                     </h3>
-                    <div className="space-y-3 max-h-[280px] overflow-y-auto pr-2">
+                    <div className="space-y-2 sm:space-y-3 max-h-[200px] sm:max-h-[280px] overflow-y-auto pr-2">
                       {itinerary?.days?.[0]?.activities?.map((activity: Activity, idx: number) => (
                         <div 
                           key={idx} 
-                          className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
+                          className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
                         >
-                          <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                            <span className="text-xs font-bold text-primary">{idx + 1}</span>
+                          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                            <span className="text-[10px] sm:text-xs font-bold text-primary">{idx + 1}</span>
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm text-foreground line-clamp-1">{activity.title}</p>
-                            <p className="text-xs text-muted-foreground">{activity.time}</p>
-                            <p className="text-xs text-muted-foreground line-clamp-1 mt-1">{activity.location}</p>
+                            <p className="font-medium text-xs sm:text-sm text-foreground line-clamp-1">{activity.title}</p>
+                            <p className="text-[10px] sm:text-xs text-muted-foreground">{activity.time}</p>
+                            <p className="text-[10px] sm:text-xs text-muted-foreground line-clamp-1 mt-0.5 sm:mt-1">{activity.location}</p>
                           </div>
                         </div>
                       ))}
@@ -359,14 +363,14 @@ const TrackJourney = () => {
                   </Card>
                 </>
               ) : (
-                <Card className="p-6 shadow-lg border-amber-500/20 bg-amber-500/5">
-                  <div className="flex flex-col items-center text-center gap-4">
-                    <div className="w-16 h-16 rounded-full bg-amber-500/20 flex items-center justify-center animate-pulse">
-                      <AlertCircle className="w-8 h-8 text-amber-500" />
+                <Card className="p-4 sm:p-6 shadow-lg border-amber-500/20 bg-amber-500/5">
+                  <div className="flex flex-col items-center text-center gap-3 sm:gap-4">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-amber-500/20 flex items-center justify-center animate-pulse">
+                      <AlertCircle className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500" />
                     </div>
                     <div>
-                      <p className="font-semibold text-foreground">Acquiring your location...</p>
-                      <p className="text-sm text-muted-foreground mt-1">Please enable location services</p>
+                      <p className="font-semibold text-sm sm:text-base text-foreground">Acquiring your location...</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground mt-1">Please enable location services</p>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <div className="w-2 h-2 rounded-full bg-amber-500 animate-bounce"></div>
