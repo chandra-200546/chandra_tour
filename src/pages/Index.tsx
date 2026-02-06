@@ -1,6 +1,11 @@
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import floatBeach from "@/assets/float-beach.png";
+import floatMountain from "@/assets/float-mountain.png";
+import floatBalloon from "@/assets/float-balloon.png";
+import floatTemple from "@/assets/float-temple.png";
+import floatCompass from "@/assets/float-compass.png";
 import { 
   Compass, 
   MessageCircle, 
@@ -74,6 +79,12 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-hero opacity-10" />
         <div className="absolute top-20 right-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
         <div className="absolute bottom-10 left-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl" />
+
+        {/* Floating travel images */}
+        <img src={floatBalloon} alt="" className="absolute top-16 right-[5%] w-28 md:w-40 opacity-20 rounded-2xl animate-float-slow pointer-events-none select-none" />
+        <img src={floatMountain} alt="" className="absolute top-[40%] left-[2%] w-24 md:w-36 opacity-15 rounded-2xl animate-float-medium pointer-events-none select-none" />
+        <img src={floatTemple} alt="" className="absolute bottom-[10%] right-[8%] w-20 md:w-32 opacity-15 rounded-2xl animate-float-fast pointer-events-none select-none" />
+        <img src={floatCompass} alt="" className="absolute top-[20%] left-[8%] w-20 md:w-28 opacity-10 rounded-full animate-float-reverse pointer-events-none select-none" />
         
         <div className="container mx-auto relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -133,7 +144,8 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 bg-muted/30">
+      <section className="py-20 px-4 bg-muted/30 relative overflow-hidden">
+        <img src={floatBeach} alt="" className="absolute -bottom-10 -right-10 w-48 md:w-64 opacity-10 rounded-2xl animate-float-slow pointer-events-none select-none" />
         <div className="container mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
