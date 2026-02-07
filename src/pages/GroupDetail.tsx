@@ -98,7 +98,7 @@ const GroupDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="container mx-auto py-8 px-4">
+      <div className="container mx-auto pt-24 pb-8 px-4">
         <div className="max-w-6xl mx-auto">
           <Button
             variant="ghost"
