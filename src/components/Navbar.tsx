@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Compass, MessageCircle, MapPin, Users, Navigation, Wallet } from "lucide-react";
+import tripmintLogo from "@/assets/tripmint-logo.jpeg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,12 +21,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 rounded-full bg-gradient-warm flex items-center justify-center shadow-warm transition-transform group-hover:scale-110">
-              <Compass className="w-6 h-6 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-bold bg-gradient-warm bg-clip-text text-transparent">
-              Chandra Tourism
-            </span>
+            <img src={tripmintLogo} alt="Tripmint" className="h-10 w-auto transition-transform group-hover:scale-110" />
           </Link>
 
           {/* Desktop Navigation */}
