@@ -1,15 +1,49 @@
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Receipt, User, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Receipt, User, ArrowRight, CheckCircle2 } from "lucide-react";
 import { format } from "date-fns";
+import { useToast } from "@/hooks/use-toast";
 
 interface ExpensesListProps {
   expenses: any[];
   members: any[];
   onRefresh: () => void;
+  isAdmin?: boolean;
 }
 
-const ExpensesList = ({ expenses, members, onRefresh }: ExpensesListProps) => {
+const ExpensesList = ({ expenses, members, onRefresh, isAdmin = false }: ExpensesListProps) => {
+  const [markingPaid, setMarkingPaid] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  const handleMarkAsPaid = async (splitId: string) => {
+    try {
+      setMarkingPaid(splitId);
+      const { error } = await supabase
+        .from("expense_splits")
+        .update({ is_paid: true, paid_at: new Date().toISOString() })
+        .eq("id", splitId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Marked as Paid",
+        description: "The split has been marked as settled.",
+      });
+      onRefresh();
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setMarkingPaid(null);
+    }
+  };
+
   if (expenses.length === 0) {
     return (
       <Card>
@@ -90,12 +124,26 @@ const ExpensesList = ({ expenses, members, onRefresh }: ExpensesListProps) => {
                             <span className="font-semibold text-sm">₹{parseFloat(split.share_amount).toFixed(2)}</span>
                             {split.is_paid ? (
                               <Badge className="bg-green-600 text-white text-xs hover:bg-green-600">
+                                <CheckCircle2 className="w-3 h-3 mr-1" />
                                 Settled
                               </Badge>
                             ) : (
-                              <Badge variant="destructive" className="text-xs">
-                                Pending
-                              </Badge>
+                              <div className="flex items-center gap-2">
+                                <Badge variant="destructive" className="text-xs">
+                                  Pending
+                                </Badge>
+                                {isAdmin && (
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="h-7 text-xs border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground"
+                                    onClick={() => handleMarkAsPaid(split.id)}
+                                    disabled={markingPaid === split.id}
+                                  >
+                                    {markingPaid === split.id ? "Updating..." : "Mark Paid"}
+                                  </Button>
+                                )}
+                              </div>
                             )}
                           </div>
                         </div>
