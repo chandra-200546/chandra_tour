@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import tripmintLogo from "@/assets/tripmint-logo.jpeg";
 import { 
   Compass, 
   MessageCircle, 
@@ -330,8 +331,7 @@ const Index = () => {
       <footer className="py-12 px-4 border-t border-border">
         <div className="container mx-auto text-center text-muted-foreground">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <Compass className="w-6 h-6 text-primary" />
-            <span className="text-lg font-semibold text-foreground">Chandra Tourism</span>
+            <img src={tripmintLogo} alt="Tripmint" className="h-8 w-auto" />
           </div>
           <p className="text-sm">
             Making travel simple, smart, and soulful - where technology meets emotion
