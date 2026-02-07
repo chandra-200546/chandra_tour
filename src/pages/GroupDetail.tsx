@@ -21,6 +21,7 @@ const GroupDetail = () => {
   const [expenses, setExpenses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [addExpenseOpen, setAddExpenseOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     fetchGroupData();
@@ -48,6 +49,15 @@ const GroupDetail = () => {
 
       if (membersError) throw membersError;
       setMembers(membersData || []);
+
+      // Check if current user is admin
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const currentMember = (membersData || []).find(
+          (m: any) => m.user_id === session.user.id
+        );
+        setIsAdmin(currentMember?.is_admin || false);
+      }
 
       // Fetch expenses
       const { data: expensesData, error: expensesError } = await supabase
@@ -131,7 +141,7 @@ const GroupDetail = () => {
             </TabsList>
 
             <TabsContent value="expenses">
-              <ExpensesList expenses={expenses} members={members} onRefresh={fetchGroupData} />
+              <ExpensesList expenses={expenses} members={members} onRefresh={fetchGroupData} isAdmin={isAdmin} />
             </TabsContent>
 
             <TabsContent value="members">
