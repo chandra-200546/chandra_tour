@@ -5,35 +5,32 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Compass, Mail, Lock } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
 const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user } = useAuth();
   const [signInData, setSignInData] = useState({ email: "", password: "" });
   const [signUpData, setSignUpData] = useState({ email: "", password: "", confirmPassword: "" });
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // Check if user is already logged in
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        navigate("/");
-      }
-    };
-    checkAuth();
-  }, [navigate]);
+  // Redirect if already logged in
+  if (user) {
+    navigate("/");
+    return null;
+  }
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email: signInData.email,
         password: signInData.password,
       });
@@ -91,12 +88,19 @@ const Auth = () => {
 
       if (error) throw error;
 
-      toast({
-        title: "Success",
-        description: "Account created successfully!",
-      });
-
-      navigate("/");
+      // Check if email confirmation is needed
+      if (data.user && !data.session) {
+        toast({
+          title: "Check your email",
+          description: "We've sent you a confirmation link. Please verify your email to sign in.",
+        });
+      } else {
+        toast({
+          title: "Success",
+          description: "Account created successfully!",
+        });
+        navigate("/");
+      }
     } catch (error: any) {
       toast({
         title: "Error",

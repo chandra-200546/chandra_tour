@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Compass, MessageCircle, MapPin, Users, Navigation, Wallet } from "lucide-react";
+import { Menu, X, Compass, MessageCircle, MapPin, Users, Navigation, Wallet, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 import tripmintLogo from "@/assets/tripmint-logo.jpeg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const navItems = [
     { name: "Destinations", href: "/destinations", icon: MapPin },
@@ -14,6 +17,11 @@ const Navbar = () => {
     { name: "SmartPay", href: "/smartpay", icon: Wallet },
     { name: "AI Assistant", href: "/chat", icon: MessageCircle },
   ];
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border">
@@ -38,14 +46,23 @@ const Navbar = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            <Link to="/auth">
-              <Button variant="ghost">Sign In</Button>
-            </Link>
-            <Link to="/auth">
-              <Button className="bg-gradient-warm shadow-warm hover:shadow-elegant transition-all">
-                Get Started
+            {user ? (
+              <Button variant="ghost" onClick={handleSignOut} className="text-foreground hover:text-destructive">
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
               </Button>
-            </Link>
+            ) : (
+              <>
+                <Link to="/auth">
+                  <Button variant="ghost">Sign In</Button>
+                </Link>
+                <Link to="/auth">
+                  <Button className="bg-gradient-warm shadow-warm hover:shadow-elegant transition-all">
+                    Get Started
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -72,12 +89,21 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="px-4 pt-4 space-y-2 border-t border-border">
-              <Link to="/auth" onClick={() => setIsOpen(false)}>
-                <Button variant="outline" className="w-full">Sign In</Button>
-              </Link>
-              <Link to="/auth" onClick={() => setIsOpen(false)}>
-                <Button className="w-full bg-gradient-warm">Get Started</Button>
-              </Link>
+              {user ? (
+                <Button variant="outline" className="w-full" onClick={() => { handleSignOut(); setIsOpen(false); }}>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </Button>
+              ) : (
+                <>
+                  <Link to="/auth" onClick={() => setIsOpen(false)}>
+                    <Button variant="outline" className="w-full">Sign In</Button>
+                  </Link>
+                  <Link to="/auth" onClick={() => setIsOpen(false)}>
+                    <Button className="w-full bg-gradient-warm">Get Started</Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}
