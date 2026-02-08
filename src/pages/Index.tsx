@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import AdminDashboard from "@/components/AdminDashboard";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import tripmintLogo from "@/assets/tripmint-logo.jpeg";
@@ -336,9 +337,12 @@ const Index = () => {
           <p className="text-sm">
             Making travel simple, smart, and soulful - where technology meets emotion
           </p>
-          <p className="text-xs mt-4">
-            © 2025 Chandra Tourism. All rights reserved.
-          </p>
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <p className="text-xs">
+              © 2025 Chandra Tourism. All rights reserved.
+            </p>
+            <AdminDashboard />
+          </div>
         </div>
       </footer>
     </div>
