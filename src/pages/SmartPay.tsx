@@ -12,7 +12,6 @@ import GroupsList from "@/components/smartpay/GroupsList";
 import Navbar from "@/components/Navbar";
 
 const SmartPay = () => {
-  const [user, setUser] = useState<any>(null);
   const [groups, setGroups] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
@@ -21,18 +20,8 @@ const SmartPay = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      navigate("/auth");
-      return;
-    }
-    setUser(session.user);
     fetchGroups();
-  };
+  }, []);
 
   const fetchGroups = async () => {
     try {

@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Destinations from "./pages/Destinations";
 import Plan from "./pages/Plan";
@@ -21,18 +23,20 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/destinations" element={<Destinations />} />
-          <Route path="/plan" element={<Plan />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/track-journey" element={<TrackJourney />} />
-          <Route path="/smartpay" element={<SmartPay />} />
-          <Route path="/smartpay/:groupId" element={<GroupDetail />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/destinations" element={<ProtectedRoute><Destinations /></ProtectedRoute>} />
+            <Route path="/plan" element={<ProtectedRoute><Plan /></ProtectedRoute>} />
+            <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+            <Route path="/track-journey" element={<ProtectedRoute><TrackJourney /></ProtectedRoute>} />
+            <Route path="/smartpay" element={<ProtectedRoute><SmartPay /></ProtectedRoute>} />
+            <Route path="/smartpay/:groupId" element={<ProtectedRoute><GroupDetail /></ProtectedRoute>} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
