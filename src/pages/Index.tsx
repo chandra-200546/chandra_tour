@@ -3,6 +3,10 @@ import AdminDashboard from "@/components/AdminDashboard";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import tripmintLogo from "@/assets/tripmint-logo.jpeg";
+import destRajasthan from "@/assets/dest-rajasthan.jpg";
+import destKerala from "@/assets/dest-kerala.jpg";
+import destGoa from "@/assets/dest-goa.jpg";
+import destHimachal from "@/assets/dest-himachal.jpg";
 import { 
   Compass, 
   MessageCircle, 
@@ -54,10 +58,10 @@ const Index = () => {
   ];
 
   const destinations = [
-    { name: "Rajasthan", image: "🏰", desc: "Royal palaces & desert adventures" },
-    { name: "Kerala", image: "🌴", desc: "Backwaters & tropical paradise" },
-    { name: "Goa", image: "🏖️", desc: "Beaches & vibrant culture" },
-    { name: "Himachal", image: "⛰️", desc: "Mountain escapes & serenity" },
+    { name: "Rajasthan", image: destRajasthan, desc: "Royal palaces & desert adventures" },
+    { name: "Kerala", image: destKerala, desc: "Backwaters & tropical paradise" },
+    { name: "Goa", image: destGoa, desc: "Beaches & vibrant culture" },
+    { name: "Himachal", image: destHimachal, desc: "Mountain escapes & serenity" },
   ];
 
   const stats = [
@@ -196,8 +200,8 @@ const Index = () => {
                 key={dest.name}
                 className="overflow-hidden group cursor-pointer border-border/50 hover:shadow-warm transition-all"
               >
-                <div className="aspect-square bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-8xl group-hover:scale-110 transition-transform">
-                  {dest.image}
+                <div className="aspect-square overflow-hidden">
+                  <img src={dest.image} alt={dest.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
