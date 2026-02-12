@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Compass, Mail, Lock } from "lucide-react";
+import { Mail, Lock } from "lucide-react";
+import tripmintLogo from "@/assets/tripmint-logo.jpeg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -119,13 +120,13 @@ const Auth = () => {
       <section className="pt-24 pb-12 px-4">
         <div className="container mx-auto max-w-md">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 rounded-full bg-gradient-warm flex items-center justify-center mx-auto mb-4 shadow-warm">
-              <Compass className="w-8 h-8 text-primary-foreground" />
+            <div className="w-16 h-16 rounded-full overflow-hidden mx-auto mb-4 shadow-warm">
+              <img src={tripmintLogo} alt="Tripmint" className="w-full h-full object-cover" />
             </div>
             <h1 className="text-4xl font-bold mb-2">
               Welcome to{" "}
               <span className="bg-gradient-warm bg-clip-text text-transparent">
-                Chandra Tourism
+                Tripmint
               </span>
             </h1>
             <p className="text-muted-foreground">
