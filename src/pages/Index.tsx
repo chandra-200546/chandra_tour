@@ -147,7 +147,7 @@ const Index = () => {
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
               Why Choose{" "}
               <span className="bg-gradient-warm bg-clip-text text-transparent">
-                Chandra Tourism
+                Tripmint
               </span>
             </h2>
             <p className="text-xl text-muted-foreground">
