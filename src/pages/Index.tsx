@@ -7,6 +7,8 @@ import destRajasthan from "@/assets/dest-rajasthan.jpg";
 import destKerala from "@/assets/dest-kerala.jpg";
 import destGoa from "@/assets/dest-goa.jpg";
 import destHimachal from "@/assets/dest-himachal.jpg";
+import fiveuLogo from "@/assets/fiveu-logo.jpeg";
+import { useState } from "react";
 import { 
   Compass, 
   MessageCircle, 
@@ -18,12 +20,36 @@ import {
   TrendingUp,
   Award,
   ArrowRight,
-  Phone,
   Mail,
-  Copy
+  Send,
+  User,
+  Phone
 } from "lucide-react";
 
 const Index = () => {
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus("sending");
+    try {
+      const response = await fetch("https://formspree.io/f/YOUR_FORMSPREE_KEY", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        setFormStatus("success");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      } else {
+        setFormStatus("error");
+      }
+    } catch {
+      setFormStatus("error");
+    }
+  };
+
   const features = [
     {
       icon: Compass,
@@ -248,87 +274,110 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Developer Section */}
+      {/* Contact Us Section */}
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <h2 className="text-4xl font-bold mb-4">
-              Meet the{" "}
-              <span className="bg-gradient-warm bg-clip-text text-transparent">
-                Developer
-              </span>
+          <div className="max-w-2xl mx-auto text-center space-y-4 mb-12">
+            <h2 className="text-4xl font-bold">
+              Contact{" "}
+              <span className="bg-gradient-warm bg-clip-text text-transparent">Us</span>
             </h2>
-            <p className="text-xl text-muted-foreground mb-8">
-              Have questions or need assistance? Get in touch with us
+            <p className="text-xl text-muted-foreground">
+              Have questions or need help planning your trip? We'd love to hear from you.
             </p>
-            
-            <Card className="p-8 border-border/50 shadow-warm overflow-hidden relative">
-              {/* Background decoration */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-              
-              <div className="relative space-y-8">
-                <div className="flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-gradient-warm flex items-center justify-center shadow-elegant">
-                    <Users className="w-12 h-12 text-primary-foreground" />
+          </div>
+
+          <Card className="max-w-2xl mx-auto p-8 border-border/50 shadow-warm">
+            {formStatus === "success" ? (
+              <div className="text-center py-10 space-y-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
+                  <Send className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold">Message Sent!</h3>
+                <p className="text-muted-foreground">Thank you for reaching out. We'll get back to you shortly.</p>
+                <Button onClick={() => setFormStatus("idle")} variant="outline">Send Another Message</Button>
+              </div>
+            ) : (
+              <form onSubmit={handleContactSubmit} className="space-y-6">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <User className="w-4 h-4 text-primary" /> Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      maxLength={100}
+                      placeholder="Your full name"
+                      value={formData.name}
+                      onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-primary" /> Phone
+                    </label>
+                    <input
+                      type="tel"
+                      maxLength={15}
+                      placeholder="Your phone number"
+                      value={formData.phone}
+                      onChange={e => setFormData(p => ({ ...p, phone: e.target.value }))}
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition"
+                    />
                   </div>
                 </div>
-                
-                <div>
-                  <h3 className="text-3xl font-bold mb-2">Chandrashekhar</h3>
-                  <p className="text-lg text-muted-foreground">Developer</p>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-primary" /> Email
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    maxLength={255}
+                    placeholder="your@email.com"
+                    value={formData.email}
+                    onChange={e => setFormData(p => ({ ...p, email: e.target.value }))}
+                    className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition"
+                  />
                 </div>
-                
-                <div className="grid gap-4 max-w-md mx-auto">
-                  {/* Phone */}
-                  <Card className="p-4 hover:shadow-warm transition-all cursor-pointer group border-border/50" onClick={() => window.location.href = 'tel:+917975256005'}>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                        <Phone className="w-6 h-6 text-primary" />
-                      </div>
-                      <div className="flex-1 text-left">
-                        <p className="text-sm text-muted-foreground">Phone</p>
-                        <p className="text-lg font-semibold group-hover:text-primary transition-colors">7975256005</p>
-                      </div>
-                      <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                    </div>
-                  </Card>
-
-                  {/* WhatsApp */}
-                  <Card className="p-4 hover:shadow-warm transition-all cursor-pointer group border-border/50">
-                    <a 
-                      href="https://wa.me/7975256005?text=Hello%20Chandrashekhar!%20I%20need%20help%20with%20my%20travel%20plans." 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-4"
-                    >
-                      <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
-                        <MessageCircle className="w-6 h-6 text-secondary" />
-                      </div>
-                      <div className="flex-1 text-left">
-                        <p className="text-sm text-muted-foreground">WhatsApp</p>
-                        <p className="text-lg font-semibold group-hover:text-secondary transition-colors">7975256005</p>
-                      </div>
-                      <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-secondary group-hover:translate-x-1 transition-all" />
-                    </a>
-                  </Card>
-
-                  {/* Email */}
-                  <Card className="p-4 hover:shadow-warm transition-all cursor-pointer group border-border/50" onClick={() => window.location.href = 'mailto:chandrashekharkumbarias8055@gmail.com'}>
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                        <Mail className="w-6 h-6 text-accent" />
-                      </div>
-                      <div className="flex-1 text-left overflow-hidden">
-                        <p className="text-sm text-muted-foreground">Email</p>
-                        <p className="text-sm md:text-base font-semibold group-hover:text-accent transition-colors truncate">chandrashekharkumbarias8055@gmail.com</p>
-                      </div>
-                      <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-accent group-hover:translate-x-1 transition-all" />
-                    </div>
-                  </Card>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">Message</label>
+                  <textarea
+                    required
+                    maxLength={1000}
+                    rows={4}
+                    placeholder="Tell us about your travel plans or questions..."
+                    value={formData.message}
+                    onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
+                    className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition resize-none"
+                  />
                 </div>
-              </div>
-            </Card>
-          </div>
+                {formStatus === "error" && (
+                  <p className="text-destructive text-sm">Something went wrong. Please try again.</p>
+                )}
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={formStatus === "sending"}
+                  className="w-full bg-gradient-warm shadow-warm hover:shadow-elegant transition-all text-lg"
+                >
+                  {formStatus === "sending" ? "Sending..." : (
+                    <><Send className="w-5 h-5 mr-2" /> Send Message</>
+                  )}
+                </Button>
+              </form>
+            )}
+          </Card>
+        </div>
+      </section>
+
+      {/* Developed By Section */}
+      <section className="py-10 px-4 border-t border-border bg-background">
+        <div className="container mx-auto text-center">
+          <p className="text-sm text-muted-foreground mb-3">Developed by</p>
+          <img src={fiveuLogo} alt="FiveU Vector Technologies" className="h-14 w-auto mx-auto object-contain" />
         </div>
       </section>
 
