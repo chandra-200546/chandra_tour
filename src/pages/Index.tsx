@@ -9,6 +9,7 @@ import destGoa from "@/assets/dest-goa.jpg";
 import destHimachal from "@/assets/dest-himachal.jpg";
 import fiveuLogo from "@/assets/fiveu-logo.jpeg";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { 
   Compass, 
   MessageCircle, 
@@ -135,7 +136,9 @@ const Index = () => {
               <Button 
                 size="lg" 
                 className="bg-gradient-warm shadow-warm hover:shadow-elegant transition-all text-lg px-8 group"
-                onClick={() => window.location.href = '/auth'}
+                <Link to="/auth">
+  <Button>Start Planning</Button>
+</Link>
               >
                 Start Planning
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
