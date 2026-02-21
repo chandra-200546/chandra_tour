@@ -91,8 +91,8 @@ const Index = () => {
   ];
 
   const stats = [
-    { icon: MapPin, value: "100+", label: "Destinations" },
-    { icon: Heart, value: "1000+", label: "Happy Travelers" },
+    { icon: MapPin, value: "10+", label: "Destinations" },
+    { icon: Heart, value: "100+", label: "Happy Travelers" },
     { icon: Award, value: "4.9", label: "Average Rating" },
   ];
 
@@ -135,7 +135,7 @@ const Index = () => {
               <Button 
                 size="lg" 
                 className="bg-gradient-warm shadow-warm hover:shadow-elegant transition-all text-lg px-8 group"
-                onClick={() => window.location.href = '/plan'}
+                onClick={() => window.location.href = '/auth'}
               >
                 Start Planning
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -144,7 +144,7 @@ const Index = () => {
                 size="lg" 
                 variant="outline" 
                 className="text-lg px-8"
-                onClick={() => window.location.href = '/chat'}
+                onClick={() => window.location.href = '/auth'}
               >
                 <MessageCircle className="w-5 h-5 mr-2" />
                 Try AI Assistant
@@ -257,7 +257,7 @@ const Index = () => {
                 size="lg" 
                 variant="secondary" 
                 className="text-lg px-8"
-                onClick={() => window.location.href = '/destinations'}
+                onClick={() => window.location.href = '/auth'}
               >
                 <TrendingUp className="w-5 h-5 mr-2" />
                 Explore Destinations
@@ -265,7 +265,7 @@ const Index = () => {
               <Button 
                 size="lg" 
                 className="bg-background text-foreground hover:bg-background/90 text-lg px-8"
-                onClick={() => window.location.href = '/chat'}
+                onClick={() => window.location.href = '/auth'}
               >
                 Talk to AI Assistant
               </Button>
