@@ -27,7 +27,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/Start Planning" element={<ProtectedRoute><Plan /></ProtectedRoute>} />
+            <Route path="/Start Planning" element={<Auth />} />
             <Route path="/destinations" element={<ProtectedRoute><Destinations /></ProtectedRoute>} />
             <Route path="/plan" element={<ProtectedRoute><Plan /></ProtectedRoute>} />
             <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
