@@ -392,7 +392,7 @@ const Index = () => {
           </p>
           <div className="flex items-center justify-center gap-2 mt-4">
             <p className="text-xs">
-              © 2025 Chandra Tourism. All rights reserved.
+              © 2026 Tripmint. All rights reserved.
             </p>
             <AdminDashboard />
           </div>
